@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Clérgia Furtado</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: Foto 1;
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        .instrucao {
+            position: absolute;
+            top: 20px;
+            font-size: 0.9rem;
+            color: #8c7b6e;
+            font-style: italic;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Estrutura do Livro */
+        .book {
+            position: relative;
+            width: 380px;
+            height: 500px;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.2),
+                        -5px 5px 20px rgba(0,0,0,0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        /* Estilo Geral das Páginas */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        /* Lados da Página (Frente e Verso) */
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #fffdfa;
+            border: 1px solid #eadecc;
+            box-shadow: inset 3px 0 10px rgba(0,0,0,0.05);
+        }
+
+        /* Verso precisa ser rotacionado */
+        .back {
+            transform: rotateY(180deg);
+            background: #fdfbf7;
+            box-shadow: inset -3px 0 10px rgba(0,0,0,0.05);
+        }
+
+        /* Capa do Livro */
+        .cover-front {
+            background: linear-gradient(135deg, #8a2528 0%, #5c1619 100%);
+            color: #f7e1b5;
+            text-align: center;
+            border: none;
+            box-shadow: inset 4px 4px 10px rgba(255,255,255,0.1);
+        }
+
+        .cover-front h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .cover-front p {
+            font-size: 1.1rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Contracapa (Final) */
+        .cover-back {
+            background: linear-gradient(135deg, #5c1619 0%, #8a2528 100%);
+            border: none;
+        }
+
+        /* Conteúdo do Texto */
+        .content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #3a332d;
+            text-align: justify;
+        }
+
+        .poem {
+            font-style: italic;
+            text-align: center;
+            line-height: 1.8;
+            color: #4a3b32;
+        }
+
+        .date-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #8a2528;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Lógica para virar as páginas via Checkbox */
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Vinculando os IDs dos checkboxes às rotações das páginas */
+        #p1:checked ~ .book #page1 { transform: rotateY(-180deg); z-index: 1; }
+        #p2:checked ~ .book #page2 { transform: rotateY(-180deg); z-index: 2; }
+        #p3:checked ~ .book #page3 { transform: rotateY(-180deg); z-index: 3; }
+        #p4:checked ~ .book #page4 { transform: rotateY(-180deg); z-index: 4; }
+
+        /* Controle de empilhamento (Z-Index) inicial das páginas */
+        #page1 { z-index: 5; }
+        #page2 { z-index: 4; }
+        #page3 { z-index: 3; }
+        #page4 { z-index: 2; }
+        #page5 { z-index: 1; pointer-events: none; } /* Página final estática */
+
+        /* Decoração de linhas do caderno (opcional, dá um charme) */
+        .front::after, .back::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0) 97%, rgba(138,37,40,0.03) 3%) 0 0/100% 28px;
+            pointer-events: none;
+        }
+        .cover-front::after, .cover-back::after { display: none; }
+
+    </style>
+</head>
+<body>
+
+    <div class="instrucao">Clique nas páginas para folhear</div>
+
+    <input type="checkbox" id="p1">
+    <input type="checkbox" id="p2">
+    <input type="checkbox" id="p3">
+    <input type="checkbox" id="p4">
+
+    <div class="book">
+
+        <div class="page" id="page1">
+            <label class="front cover-front" for="p1">
+                <h1>Para Clérgia Furtado</h1>
+                <p>Uma mensagem especial...</p>
+            </label>
+            <label class="back" for="p1">
+                <div class="content">
+                    <div class="date-header">Parte 1</div>
+                    <p>Então... mais um 10/06...</p>
+                    <br>
+                    <p>Engraçado... sempre quando paro para pensar em você, me pergunto: “O que ela tem? Por que faço isso tudo?”</p>
+                    <br>
+                    <p>É, não sei... só sei que se eu não fizer, me arrependerei eternamente.</p>
+                </div>
+            </label>
+        </div>
+
+        <div class="page" id="page2">
+            <label class="front" for="p2">
+                <div class="content">
+                    <p>Todo os anos, eu penso em fazer algo que te impressione, que te encante, que te deixe feliz.</p>
+                    <br>
+                    <p>E nunca tenho 100% de certeza se consigo alcançar esse objetivo, mas tenho 100% de certeza que sempre espera que eu tente.</p>
+                    <br>
+                    <p>E é por isso que nunca canso, paro ou desisto... até porque, como já disse uma vez, o seu sorriso me faz sorrir.</p>
+                </div>
+            </label>
+            <label class="back" for="p2">
+                <div class="content">
+                    <div class="date-header">Parte 2</div>
+                    <p>Neste ano, eu pensei em várias coisas, como sempre, mas sempre é difícil decidir!</p>
+                    <br>
+                    <p>Como disse, eu tento sempre trazer uma nova experiência e isso é complicado... mas sempre, sempre, as coisas vão se encaixando e criando um cenário, algo que consigo imaginar, como por exemplo agora... você, na sua casa, em sua cama, lendo esta carta e já com os olhinhos puxados cheios de lágrimas!</p>
+                </div>
+            </label>
+        </div>
+
+        <div class="page" id="page3">
+            <label class="front" for="p3">
+                <div class="content">
+                    <p>É, eu idealizo muita coisa e posso até está errado sobre este momento, mas é por essa visão que me faz querer sempre fazer mais e mais por você.</p>
+                    <br>
+                    <p>Dito tudo isso, para este ano, o objetivo não foi o presente, não foi o buquê, não foi o chocolate... foi de trazer essas palavras, escritas a mão até você!</p>
+                </div>
+            </label>
+            <label class="back" for="p3">
+                <div class="content">
+                    <p>Isso tudo para lembrar que, desde 2019, você tem sido um refúgio, um alívio, um sonho, um presente para mim.</p>
+                    <br>
+                    <p>Clérgia, lembro da nossa conversa no carro como se fosse hoje a respeito de falar “eu te amo” para alguém e, hoje, isso sai naturalmente com a gente.</p>
+                    <br>
+                    <p>Porém, te digo, nem isso é mais suficiente para expressar o carinho e propriamente o amor que sinto por você.</p>
+                </div>
+            </label>
+        </div>
+
+        <div class="page" id="page4">
+            <label class="front" for="p4">
+                <div class="content">
+                    <div class="date-header">Parte 3</div>
+                    <p>Poderia falar muito mais, mas sei que essa data ainda se repetirá por muitos e muitos anos!</p>
+                    <br>
+                    <p>Então, o clichê que não podermos esquecer: muita paz, saúde, felicidade, sucesso, prosperidade e que seus planos e objetivos possam se cumprir e ser alcançados.</p>
+                </div>
+            </label>
+            <label class="back" for="p4">
+                <div class="content">
+                    <p style="margin-bottom: 15px;">Ah, e para finalizar, faz tempo que não mando um poeminha, né? Vamos lá...</p>
+                    <div class="poem">
+                        Estar longe, mas nunca distante<br>
+                        Ser presente, mas sem estar perto<br>
+                        Sim, é muito intrigante<br>
+                        Mas também, é algo bem concreto<br>
+                        <br>
+                        E é nesse verso curto<br>
+                        Que resume bem o “nosso amor”<br>
+                        Mas sem perder a “gracinha”<br>
+                        Para a minha ADM,<br>
+                        Do seu contador.
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <div class="page" id="page5">
+            <div class="front cover-back"></div>
+        </div>
+
+    </div>
+
+</body>
+</html>
